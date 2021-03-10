@@ -63,14 +63,20 @@ If the errors persist, try:
 
          Created By : GitHub | amitray007
          
-usage: ChromePasswordDecrypter.py [-h] [-s] [-t]
+usage: ChromePasswordDecrypter.py [-h] [-s] [-t] [-l URL] [-u USERNAME]
+                                  [-p PASSWORD]
 
 [+] Chrome Saved Password Decrypter
 
 optional arguments:
-  -h, --help  show this help message and exit
-  -s, --show  Display Decrypted password in terminal
-  -t, --txt   Save Decrypted password in txt format
+  -h, --help            show this help message and exit
+  -s, --show            Display Decrypted password in terminal
+  -t, --txt             Save Decrypted password in txt format
+  -l URL, --url URL     Search for specific URL
+  -u USERNAME, --username USERNAME
+                        Search for specific Username
+  -p PASSWORD, --password PASSWORD
+                        Search for specific Password
 ```
 
 - ChromeCookiesDecrypter
@@ -85,14 +91,15 @@ optional arguments:
 
          Created By : GitHub | amitray007
          
-usage: ChromeCookiesDecrypter.py [-h] [-s] [-t]
+usage: ChromeCookiesDecrypter.py [-h] [-s] [-t] [-l URL]
 
 [+] Chrome Saved Cookies Decrypter
 
 optional arguments:
-  -h, --help  show this help message and exit
-  -s, --show  Display Decrypted cookies in terminal
-  -t, --txt   Save Decrypted cookies in txt format
+  -h, --help         show this help message and exit
+  -s, --show         Display Decrypted cookies in terminal
+  -t, --txt          Save Decrypted cookies in txt format
+  -l URL, --url URL  Search for specific URL
 ```
 
 ## Errors, Bugs and feature requests
