@@ -19,12 +19,16 @@ Initials = '''
 '''
 
 if len(sys.argv) == 1:
-    print('''usage: {0} [-h] -s | -t\n{0}: error: the following arguments are required: -s/--show OR -t/--txt'''.format(os.path.basename(__file__)))
+    print('''usage: {0} [-h] -s | -t | -l <URL> | -u <USERNAME> | -p <PASSWORD>\n{0}: error: the following arguments are required:\n-s/--show OR -t/--txt OR -l/--url OR -u/--username OR -p/--password'''.format(os.path.basename(__file__)))
     exit()
 
+_found = 0
 parser = argparse.ArgumentParser(description='[+] Chrome Saved Password Decrypter')
 parser.add_argument('-s', '--show', action='store_true', help='Display Decrypted password in terminal')
 parser.add_argument('-t', '--txt', action='store_true', help='Save Decrypted password in txt format')
+parser.add_argument('-l', '--url', type=str, help='Search for specific URL')
+parser.add_argument('-u', '--username', type=str, help='Search for specific Username')
+parser.add_argument('-p', '--password', type=str, help='Search for specific Password')
 args = parser.parse_args()
 
 def retrieveMasterKey():
@@ -93,6 +97,10 @@ if __name__ == '__main__':
                             file = open('./Chrome{0}SavedPasswords.txt'.format(users), 'x')
                         file = open('./Chrome{0}SavedPasswords.txt'.format(users), 'a')
                         file.write('{0} | {1} | {2}\n'.format(url, username, decrypted_password))
+                    if args.url == url or args.username == username or args.password == decrypted_password:
+                        print('\n\t ** Search Results **\n' + '\n '+ "-" * 50 + "\n [+] URL: " + url + "\n [-] User Name: " + username + "\n [-] Password: " + decrypted_password + "\n " + "-" * 50)
+                        _found += 1
+                if _found==0: print('\n\t ** No Search Results **')
                 if args.txt is True: print('\n' + ' ' + "-" * 50 + '\n [!] Decrypted Passwords saved in {0} for {1} User\n'.format('./Chrome{0}SavedPasswords.txt'.format(users), users) + ' ' + "-" * 50)
             else:
                 if args.show is True or args.txt is True: print('\n' + ' ' + "-" * 50 + '\n [!] No Passwords Found in {0}\n'.format(users) + ' ' + "-" * 50)
