@@ -29,8 +29,9 @@ ChromePasswordDecrypter displays/extracts all the decrypted passwords from inter
 
 ```powershell
 > py ChromePasswordDecrypter.py
-usage: ChromePasswordDecrypter.py [-h] -s | -t
-ChromePasswordDecrypter.py: error: the following arguments are required: -s/--show OR -t/--txt
+usage: ChromePasswordDecrypter.py [-h] -s | -t | -l <URL> | -u <USERNAME> | -p <PASSWORD>
+ChromePasswordDecrypter.py: error: the following arguments are required:
+-s/--show OR -t/--txt OR -l/--url OR -u/--username OR -p/--password
 ```
 
 - Display Decrypted Saved Passwords
@@ -76,6 +77,45 @@ ChromePasswordDecrypter.py: error: the following arguments are required: -s/--sh
 
  --------------------------------------------------
  [!] No Passwords Found in Guest Profile
+ --------------------------------------------------
+```
+
+- Search decrypted password based upon URL
+```powershell
+> py ChromePasswordDecrypter.py -l https://www.0x45.com/
+
+        ** Search Results **
+        
+ --------------------------------------------------
+ [+] URL: https://www.0x45.com/
+ [-] User Name: Administrator
+ [-] Password: $3c43t9@s5w046
+ --------------------------------------------------
+```
+
+- Search decrypted password based upon Username
+```powershell
+> py ChromePasswordDecrypter.py -u Administrator
+
+        ** Search Results **
+        
+ --------------------------------------------------
+ [+] URL: https://www.0x45.com/
+ [-] User Name: Administrator
+ [-] Password: $3c43t9@s5w046
+ --------------------------------------------------
+```
+
+- Search decrypted password based upon Password
+```powershell
+> py ChromePasswordDecrypter.py -p $3c43t9@s5w046
+
+        ** Search Results **
+        
+ --------------------------------------------------
+ [+] URL: https://www.0x45.com/
+ [-] User Name: Administrator
+ [-] Password: $3c43t9@s5w046
  --------------------------------------------------
 ```
 
