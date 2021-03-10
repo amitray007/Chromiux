@@ -29,8 +29,8 @@ ChromeCookiesDecrypter displays/extracts all the decrypted cookies from internal
 
 ```powershell
 > py ChromeCookiesDecrypter.py
-usage: ChromeCookiesDecrypter.py [-h] -s | -t
-ChromeCookiesDecrypter.py: error: the following arguments are required: -s/--show OR -t/--txt
+usage: ChromeCookiesDecrypter.py [-h] -s | -t | -l <URL>
+ChromeCookiesDecrypter.py: error: the following arguments are required: -s/--show OR -t/--txt OR -l/--url
 ```
 
 - Display Decrypted Saved Cookies
@@ -76,6 +76,19 @@ ChromeCookiesDecrypter.py: error: the following arguments are required: -s/--sho
 
  --------------------------------------------------
  [!] No Cookies Found in Guest Profile
+ --------------------------------------------------
+```
+
+- Search decrypted password based upon URL
+```powershell
+> py ChromePasswordDecrypter.py -l https://www.0x45.com/
+
+        ** Search Results **
+        
+ --------------------------------------------------
+ [+] URL: https://www.0x45.com/
+ [-] CookieID: __Host-user_session_same_site
+ [-] CookieData: 1%7C5%2C41%7C6%2C76%7C7%2C68%7C8%2C62%7C9
  --------------------------------------------------
 ```
 
