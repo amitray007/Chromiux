@@ -97,7 +97,7 @@ if __name__ == '__main__':
                             file = open('./Chrome{0}SavedPasswords.txt'.format(users), 'x')
                         file = open('./Chrome{0}SavedPasswords.txt'.format(users), 'a')
                         file.write('{0} | {1} | {2}\n'.format(url, username, decrypted_password))
-                    if args.url == url or args.username == username or args.password == decrypted_password:
+                    if url.find(args.url)>0 or args.username == username or args.password == decrypted_password:
                         print('\n\t ** Search Results **\n' + '\n '+ "-" * 50 + "\n [+] URL: " + url + "\n [-] User Name: " + username + "\n [-] Password: " + decrypted_password + "\n " + "-" * 50)
                         _found += 1
                 if _found==0: print('\n\t ** No Search Results **')
