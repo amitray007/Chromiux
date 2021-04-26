@@ -89,7 +89,7 @@ if __name__ == '__main__':
                             file = open('./Chrome{0}SavedCookies.txt'.format(users), 'x')
                         file = open('./Chrome{0}SavedCookies.txt'.format(users), 'a')
                         file.write('{0} | {1} | {2}\n'.format(url, cookie_name, decrypted_cookies))
-                    if args.url == url:
+                    if url.find(args.url)>0:
                         print('\n\t ** Search Results **\n' + '\n ' + "-" * 50 + "\n [+] URL: " + url + "\n [-] CookieID: " + cookie_name + "\n [-] CookieData: " + decrypted_cookies + "\n" + ' ' + "-" * 50)
                         _found += 1
                 if _found==0: print('\n\t ** No Search Results **')
