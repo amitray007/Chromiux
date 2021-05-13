@@ -22,7 +22,7 @@ if len(sys.argv) == 1:
     print('''usage: {0} [-h] -s | -t | -l <URL> | -u <USERNAME> | -p <PASSWORD>\n{0}: error: the following arguments are required:\n-s/--show OR -t/--txt OR -l/--url OR -u/--username OR -p/--password'''.format(os.path.basename(__file__)))
     exit()
 
-_found = 0
+_found = False
 parser = argparse.ArgumentParser(description='[+] Chrome Saved Password Decrypter')
 parser.add_argument('-s', '--show', action='store_true', help='Display Decrypted password in terminal')
 parser.add_argument('-t', '--txt', action='store_true', help='Save Decrypted password in txt format')
@@ -97,10 +97,15 @@ if __name__ == '__main__':
                             file = open('./Chrome{0}SavedPasswords.txt'.format(users), 'x')
                         file = open('./Chrome{0}SavedPasswords.txt'.format(users), 'a')
                         file.write('{0} | {1} | {2}\n'.format(url, username, decrypted_password))
-                    if url.find(args.url)>0 or args.username == username or args.password == decrypted_password:
-                        print('\n\t ** Search Results **\n' + '\n '+ "-" * 50 + "\n [+] URL: " + url + "\n [-] User Name: " + username + "\n [-] Password: " + decrypted_password + "\n " + "-" * 50)
-                        _found += 1
-                if _found==0: print('\n\t ** No Search Results **')
+                    if args.url is not None:
+                        if url.find(args.url) >0 or args.username == str(username) or args.password == str(decrypted_password):
+                            print('\n\t ** Search Results **\n' + '\n '+ "-" * 50 + "\n [+] URL: " + url + "\n [-] User Name: " + username + "\n [-] Password: " + decrypted_password + "\n " + "-" * 50)
+                            _found = True
+                    else:
+                        if args.username == str(username) or args.password == str(decrypted_password):
+                            print('\n\t ** Search Results **\n' + '\n '+ "-" * 50 + "\n [+] URL: " + url + "\n [-] User Name: " + username + "\n [-] Password: " + decrypted_password + "\n " + "-" * 50)
+                            _found = True
+                if _found is False: print('\n\t ** No Search Results **')
                 if args.txt is True: print('\n' + ' ' + "-" * 50 + '\n [!] Decrypted Passwords saved in {0} for {1} User\n'.format('./Chrome{0}SavedPasswords.txt'.format(users), users) + ' ' + "-" * 50)
             else:
                 if args.show is True or args.txt is True: print('\n' + ' ' + "-" * 50 + '\n [!] No Passwords Found in {0}\n'.format(users) + ' ' + "-" * 50)
