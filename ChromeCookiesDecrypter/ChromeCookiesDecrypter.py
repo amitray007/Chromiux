@@ -22,7 +22,7 @@ if len(sys.argv) == 1:
     print('''usage: {0} [-h] -s | -t | -l <URL>\n{0}: error: the following arguments are required: -s/--show OR -t/--txt OR -l/--url'''.format(os.path.basename(__file__)))
     exit()
 
-_found = 0
+_found = False
 parser = argparse.ArgumentParser(description='[+] Chrome Saved Cookies Decrypter')
 parser.add_argument('-s', '--show', action='store_true', help='Display Decrypted cookies in terminal')
 parser.add_argument('-t', '--txt', action='store_true', help='Save Decrypted cookies in txt format')
@@ -71,6 +71,7 @@ if __name__ == '__main__':
         cookies_db = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Google\Chrome\User Data' + os.sep + '{0}'.format(users) + os.sep + 'Cookies'
         shutil.copy2(cookies_db, 'cookiesVault.db')
         conn = sqlite3.connect('cookiesVault.db')
+        conn.text_factory = bytes
         cursor = conn.cursor()
         try:
             cursor.execute("SELECT COUNT(*) FROM cookies")
@@ -78,8 +79,8 @@ if __name__ == '__main__':
             if dataQuant != 0:
                 cursor.execute("SELECT host_key, name, encrypted_value FROM cookies")
                 for r in cursor.fetchall():
-                    url = r[0]
-                    cookie_name = r[1]
+                    url = r[0].decode('utf-8')
+                    cookie_name = r[1].decode('utf-8')
                     encryptedCookies = r[2]
                     decrypted_cookies = decryptCookies(encryptedCookies, masterKey)
                     if args.show is True:
@@ -89,15 +90,16 @@ if __name__ == '__main__':
                             file = open('./Chrome{0}SavedCookies.txt'.format(users), 'x')
                         file = open('./Chrome{0}SavedCookies.txt'.format(users), 'a')
                         file.write('{0} | {1} | {2}\n'.format(url, cookie_name, decrypted_cookies))
-                    if url.find(args.url)>0:
+                    if args.url == url:
                         print('\n\t ** Search Results **\n' + '\n ' + "-" * 50 + "\n [+] URL: " + url + "\n [-] CookieID: " + cookie_name + "\n [-] CookieData: " + decrypted_cookies + "\n" + ' ' + "-" * 50)
-                        _found += 1
-                if _found==0: print('\n\t ** No Search Results **')
+                        _found = True
+                if _found is False: print('\n\t ** No Search Results **')
                 if args.txt is True: print('\n' + ' ' + "-" * 50 + '\n [!] Decrypted Cookies saved in {0} for {1} User\n'.format('./Chrome{0}SavedCookies.txt'.format(users), users) + ' ' + "-" * 50)
             else:
                 if args.show is True or args.txt is True: print('\n' + ' ' + "-" * 50 + '\n [!] No Cookies Found in {0}\n'.format(users) + ' ' + "-" * 50)
             if args.show is True: print('\n' + ' ' + '*'*50 + '\n')
         except Exception as e:
+            print(e)
             pass
         cursor.close()
         conn.close()
